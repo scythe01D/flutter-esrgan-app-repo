@@ -1,0 +1,81 @@
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_esrgan_app/emailSignUpPage.dart';
+import 'package:flutter_esrgan_app/pages/enhance.dart';
+import 'package:flutter_esrgan_app/pages/gallery.dart';
+import 'package:flutter_esrgan_app/pages/profile.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'widgets/scaler.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  PageController pageController = PageController(initialPage: 0);
+  int pageIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    ScreenScaler scaler = new ScreenScaler()..init(context);
+    return buildAuthScreen();
+  }
+
+  onPageChanged(int pageIndex) {
+    setState(() {
+      this.pageIndex = pageIndex;
+      //loadMarkerFeed();
+    });
+  }
+
+  onTap(int pageIndex) {
+    pageController.animateToPage(
+      pageIndex,
+      duration: Duration(milliseconds: 1),
+      curve: Curves.linear,
+    );
+  }
+
+  Scaffold buildAuthScreen() {
+    ScreenScaler scaler = ScreenScaler()..init(context);
+    return Scaffold(
+      key: _scaffoldKey,
+      body: PageView(
+        children: <Widget>[GalleryPage(), EnhancePage(), ProfilePage()],
+        controller: pageController,
+        onPageChanged: onPageChanged,
+        physics: NeverScrollableScrollPhysics(),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+          currentIndex: pageIndex,
+          onTap: onTap,
+          selectedItemColor: Colors.blue,
+          showUnselectedLabels: true,
+          type: BottomNavigationBarType.fixed,
+          unselectedItemColor: Colors.grey[400],
+          selectedFontSize: scaler.getTextSize(8),
+          unselectedFontSize: scaler.getTextSize(8),
+          items: [
+            BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.images),
+              label: ('Gallery'),
+            ),
+            BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.magic),
+              label: ('Enhance'),
+            ),
+            BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.user),
+              label: ('Profile'),
+            )
+          ]),
+    );
+  }
+}
