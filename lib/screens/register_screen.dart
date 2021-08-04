@@ -1,14 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class emailSignUpPage extends StatefulWidget {
-  const emailSignUpPage({Key? key}) : super(key: key);
-
+class RegisterScreen extends StatefulWidget {
   @override
-  _emailSignUpPageState createState() => _emailSignUpPageState();
+  _RegisterScreenState createState() => _RegisterScreenState();
 }
 
-class _emailSignUpPageState extends State<emailSignUpPage> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 

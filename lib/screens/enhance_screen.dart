@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class EnhancePage extends StatefulWidget {
-  const EnhancePage({Key? key}) : super(key: key);
+class EnhanceScreen extends StatefulWidget {
+  const EnhanceScreen({Key? key}) : super(key: key);
 
   @override
-  _EnhancePageState createState() => _EnhancePageState();
+  _EnhanceScreenState createState() => _EnhanceScreenState();
 }
 
-class _EnhancePageState extends State<EnhancePage> {
+class _EnhanceScreenState extends State<EnhanceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

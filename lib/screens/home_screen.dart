@@ -1,22 +1,37 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_esrgan_app/emailSignUpPage.dart';
-import 'package:flutter_esrgan_app/pages/enhance.dart';
-import 'package:flutter_esrgan_app/pages/gallery.dart';
-import 'package:flutter_esrgan_app/pages/profile.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'widgets/scaler.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+import '/screens/enhance_screen.dart';
+import '/screens/gallery_screen.dart';
+import '/screens/profile_screen.dart';
+import '/authentication/authentication.dart';
+import '/widgets/scaler.dart';
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key, required User user})
+      : _user = user,
+        super(key: key);
+
+  final User _user;
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeScreenState extends State<HomeScreen> {
+  final filename = 'file.txt';
+  final orgfilename = 'file.txt';
+  late User _user;
+  @override
+  void initState() {
+    _user = widget._user;
+    createUserInFireStore();
+    // TODO: implement initState
+    super.initState();
+  }
+
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   PageController pageController = PageController(initialPage: 0);
@@ -48,7 +63,13 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       key: _scaffoldKey,
       body: PageView(
-        children: <Widget>[GalleryPage(), EnhancePage(), ProfilePage()],
+        children: <Widget>[
+          GalleryScreen(),
+          EnhanceScreen(),
+          ProfileScreen(
+            user: _user,
+          ),
+        ],
         controller: pageController,
         onPageChanged: onPageChanged,
         physics: NeverScrollableScrollPhysics(),
@@ -74,8 +95,20 @@ class _HomePageState extends State<HomePage> {
             BottomNavigationBarItem(
               icon: FaIcon(FontAwesomeIcons.user),
               label: ('Profile'),
-            )
+            ),
           ]),
     );
+  }
+
+  createUserInFireStore() async {
+    DocumentSnapshot doc = await usersRef.doc(_user.uid).get();
+    if (!doc.exists) {
+      usersRef.doc(_user.uid).set({
+        "id": _user.uid,
+        "photoUrl": _user.photoURL,
+        "email": _user.email,
+        "displayName": _user.displayName,
+      });
+    }
   }
 }

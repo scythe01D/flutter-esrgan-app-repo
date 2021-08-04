@@ -2,24 +2,21 @@
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_esrgan_app/emailSignUpPage.dart';
+import '/screens/register_screen.dart';
 import 'package:flutter_esrgan_app/widgets/google_sign_in_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
-//import 'google_sign_in.dart.WWWWWWWWWWW.txt';
-import 'authentication/authentication.dart';
-import 'widgets/scaler.dart';
+import '../authentication/authentication.dart';
+import '../widgets/scaler.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _LoginScreenState extends State<LoginScreen> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -33,7 +30,6 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          //DEBUG Text("AAAAAAAAAAA" + scaler.getHeight(100).toString()),
           Container(
               height: scaler.getHeight(30),
               child: Image.asset('assets/images/esrganFlutterLogo.png')),
@@ -50,31 +46,6 @@ class _HomePageState extends State<HomePage> {
           SizedBox(
             height: scaler.getHeight(7),
           ),
-          //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-          // Padding(
-          //   padding: const EdgeInsets.fromLTRB(40, 10, 40, 10),
-          //   child: ElevatedButton.icon(
-          //       onPressed: () {
-          //         // final provider =
-          //         //     Provider.of<GoogleSignInProvider>(context, listen: false);
-          //         // provider.googleLogin();
-          //       },
-          //       style: ElevatedButton.styleFrom(
-          //           shape: new RoundedRectangleBorder(
-          //             borderRadius: new BorderRadius.circular(30.0),
-          //           ),
-          //           primary: Colors.white,
-          //           onPrimary: Colors.blue[500],
-          //           minimumSize: Size(double.infinity, 50)),
-          //       icon: FaIcon(
-          //         FontAwesomeIcons.google,
-          //       ),
-          //       label: Text(
-          //         'Sign up with Google',
-          //         style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
-          //       )),
-          // ),
-          //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
           FutureBuilder(
             future: Authentication.initializeFirebase(context: context),
             builder: (context, snapshot) {
@@ -88,7 +59,7 @@ class _HomePageState extends State<HomePage> {
               );
             },
           ),
-          Padding(
+          Container(
             padding: const EdgeInsets.fromLTRB(40, 10, 40, 10),
             child: ElevatedButton.icon(
                 onPressed: () {},
@@ -128,7 +99,7 @@ class _HomePageState extends State<HomePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => emailSignUpPage()),
+                            builder: (context) => RegisterScreen()),
                       );
                     }),
             ]),

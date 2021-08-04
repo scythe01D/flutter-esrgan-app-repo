@@ -1,29 +1,29 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_esrgan_app/home.dart';
-//import 'package:flutterfire_samples/res/custom_colors.dart';
-//import 'sign_in_screen.txt';
-import '../authentication/authentication.dart';
-//import 'package:flutterfire_samples/widgets/app_bar_title.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_esrgan_app/widgets/appbar_title.dart';
 
-class UserInfoScreen extends StatefulWidget {
-  const UserInfoScreen({Key? key, required User user})
+import '/screens/login_screen.dart';
+import '/authentication/authentication.dart';
+//import '/widgets/appbar_title.dart';
+
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({Key? key, required User user})
       : _user = user,
         super(key: key);
 
   final User _user;
 
   @override
-  _UserInfoScreenState createState() => _UserInfoScreenState();
+  _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _UserInfoScreenState extends State<UserInfoScreen> {
+class _ProfileScreenState extends State<ProfileScreen> {
   late User _user;
   bool _isSigningOut = false;
 
   Route _routeToSignInScreen() {
     return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => HomePage(),
+      pageBuilder: (context, animation, secondaryAnimation) => LoginScreen(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         var begin = Offset(-1.0, 0.0);
         var end = Offset.zero;
@@ -50,12 +50,27 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: AppBarTitle(),
+      ),
       //backgroundColor: CustomColors.firebaseNavy,
-      //appBar: AppBar(
-      //  elevation: 0,
-      //backgroundColor: CustomColors.firebaseNavy,
-      //  title: AppBarTitle(),
-      //),
+      // appBar: AppBar(
+      //   elevation: 0,
+      //   backgroundColor: Colors.white,
+      //   title: Row(
+      //     mainAxisAlignment: MainAxisAlignment.start,
+      //     children: [
+      //       Image.asset(
+      //         "assets/images/esrganFlutterLogo.png",
+      //         fit: BoxFit.fill,
+      //         height: 65,
+      //       ),
+      //       Container(
+      //           padding: const EdgeInsets.all(8.0), child: Text('YourAppTitle'))
+      //     ],
+      //   ),
+      // ),
+
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(
